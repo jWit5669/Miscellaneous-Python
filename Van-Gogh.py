@@ -93,6 +93,22 @@ def generatePic(orientation):
     im = Image.fromarray((nMat * 1).astype(np.uint8))
     im1 = im.save("fard.jpg")
 
+    
+def changeColor():
+  index = random.randint(0,len( picDF ) -1 )
+  im = Image.open( './' + str( picDF['Year'].iloc[ index ] ) + '/' + str( picDF['Name'].iloc[index] ) )
+  nMat = np.asarray(im)
+
+  change = 1
+  while( change > 0 ):
+    plt.imshow((nMat * change).astype(np.uint8))
+    plt.show()  
+
+    if int( input( "Would you like to save the image? " ) ) == 1:
+      im1 = Image.fromarray((nMat * change).astype(np.uint8))
+      im1 = im.save("fard.jpg")
+    change = int( input( "Enter a factor of color change or 0 to exit: ") )
+
 
 def main():
     generatePic( int(input("Enter 1 for Diagonal, 2 for Horizontal, 3 for Vertical: ")))
