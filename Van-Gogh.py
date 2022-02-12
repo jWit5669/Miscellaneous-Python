@@ -34,11 +34,7 @@ shutil.move('./picData.csv', '../../picData.csv')
 picDF = pd.read_csv( "../../picData.csv", names = [ 'Name', 'Year', 'Width', 'Height' ] )
 
 #takes random picture, picks it apart by the frequency of each color, and rearranges the pixels
-def generatePic(option, orientation):
-    options = ['none', 'antialiased', 'nearest', 'bilinear', 'bicubic',
-               'spline16', 'spline36', 'hanning', 'hamming', 'hermite',
-               'kaiser', 'quadric', 'catrom', 'gaussian', 'bessel',
-               'mitchell', 'sinc', 'lanczos', 'blackman']
+def generatePic(orientation):
 
     #psuedorandomly generated number to choose picture from
     index = random.randint(0, len(picDF) - 1)
@@ -90,12 +86,15 @@ def generatePic(option, orientation):
                 nMat[y][x] = colorBlock[count]
                 count += 1
 
-    #show picture
-    plt.imshow(nMat, interpolation=options[option])
-    plt.show()
+  plt.imshow(nMat)
+  plt.show()  
+
+  if int( input( "Would you like to save the image? " ) ) == 1:
+    im = Image.fromarray((nMat * 1).astype(np.uint8))
+    im1 = im.save("fard.jpg")
+
 
 def main():
-    generatePic(int(input("Enter an option for display: ")),
-                int(input("Enter 1 for Diagonal, 2 for Horizontal, 3 for Vertical: ")))
+    generatePic( int(input("Enter 1 for Diagonal, 2 for Horizontal, 3 for Vertical: ")))
 
 main()
